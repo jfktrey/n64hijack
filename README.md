@@ -4,4 +4,4 @@ n64hijack allows you to easily insert some assembly to be run before a game star
 
 ## Running
 
-Make sure you've compiled both n64hijack and u64asm and placed the executables in the same folder. From u64asm, you only need the file that is output from compiling its source, called n64. None of the .exe files within its folder are necessary.
+Make sure you've compiled both n64hijack and u64asm and placed the executables in the same folder. From u64asm, you only need the file that is output from compiling its source. None of the .exe files within its folder are necessary.

@@ -110,7 +110,7 @@ void insertPatcher (uint32_t patcherAddress, uint8_t buffer[], const char* asmFi
     sprintf(orgAssembly, "PATCHER_ADDRESS equ $%08X\n", patcherAddress);
     writeBuffer("patcher_address.asm", orgAssembly, sizeof(orgAssembly));
 
-    if (system((std::string("./n64 ") + asmFile + " -ohijack_temp.bin > assembly.log").c_str())) {
+    if (system((std::string("./u64asm ") + asmFile + " -ohijack_temp.bin > assembly.log").c_str())) {
         printf("\n[!] Error during assembly. See assembly.log for details\n");
         exit(5);
     }
@@ -170,7 +170,7 @@ int main (int argc, char** argv) {
     const char* hijackAsmFilename;
 
     if (argc != 4) {
-        printf("Usage: hijack infile outfile asmfile\n");
+        printf("Usage: n64hijack infile outfile asmfile\n");
         exit(1);
     }
 
