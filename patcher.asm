@@ -15,10 +15,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #include   patcher_address.asm
-    org    PATCHER_ADDRESS - 4
-
-patcher_start:
-    dw     cheat_list
+    org    $B0000000 + PATCHER_ADDRESS
 
 ; Installs general exception handler, router, and code engine
 patcher:
@@ -28,8 +25,8 @@ patcher:
     ori    t7, $FFFF
     lui    t8, $807C           ; Permanent code engine location
     ori    t8, $5C00
-    addiu  t9, t5, -4
-    lw     t9, $0000(t9)       ; Get temporary code lists location (stored before patcher)
+    lui    t9, cheat_list > $10
+    ori    t9, cheat_list & $FFFF    ; Get temporary code lists location (stored before patcher)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -57,24 +54,24 @@ boot_cheat_type:
     ; Fall through, assume FF (probably bad idea)
     ; Apply FF code type
     addiu  at, zero, $FFFC          ; Mask address
-    j      load_next_boot_cheat
+    beq    zero, zero, load_next_boot_cheat  ; Our assembler doesn't support the b pseudoinstruction...
     and    t8, v0, at               ; Update permanent code engine location
 
 boot_cheat_f1:
     ; Apply F1 code type
-    j      load_next_boot_cheat
+    beq    zero, zero, load_next_boot_cheat
     sh     v1, $0000(v0)
 
 boot_cheat_f0:
     ; Apply F0 code type
-    j      load_next_boot_cheat
+    beq    zero, zero, load_next_boot_cheat
     sb     v1, $0000(v0)
 
 boot_cheat_ee:
     ; Apply EE code type
     lui    v0, $0040
     sw     v0, $0318(t6)
-    j      load_next_boot_cheat
+    beq    zero, zero, load_next_boot_cheat
     sw     v0, $03F0(t6)
 
 
@@ -100,7 +97,8 @@ install_geh:
     subu   v1, v1, v0         ; v1 = code engine length
     addu   v0, t5, at         ; v0 = temporary code engine location
 
-loop_copy_code_engine:  ; Actually do the copying of the code engine to its permanent locatoin
+loop_copy_code_engine:
+    ; Actually do the copying of the code engine to its permanent locatoin
     lw     at, $0000(v0)
     addiu  v1, v1, -4
     sw     at, $0000(t8)
@@ -216,7 +214,7 @@ load_next_ingame_cheat:
     nop
 
     ; Address == 0 (TODO)
-    j      load_next_ingame_cheat
+    beq    zero, zero, load_next_ingame_cheat
 
 address_not_zero:
     ; Address != 0
@@ -242,7 +240,7 @@ repeater_write_loop:
     addu   v0, v0, t7
     bnez   t8, repeater_write_loop
     addu   k1, k1, v1
-    j      load_next_ingame_cheat
+    beq    zero, zero, load_next_ingame_cheat
 
 not_repeater:
     ; GS RAM write or Conditional
@@ -266,7 +264,7 @@ skip_word_write1:
     beql   v1, t8, load_next_ingame_cheat
     add    t9, t9, t7         ; Add if equal
     xori   t7, t7, 8
-    j      load_next_ingame_cheat
+    beq    zero, zero, load_next_ingame_cheat
     add    t9, t9, t7         ; Add if not-equal
 
 gs_ram_write:
@@ -276,7 +274,7 @@ gs_ram_write:
     sb     v1, $0000(v0)      ; Constant 8-bit write
     sh     v1, $0000(v0)      ; Constant 16-bit write
 skip_word_write2:
-    j      load_next_ingame_cheat
+    beq    zero, zero, load_next_ingame_cheat
 
 both_are_zero:
     ; Restore registers from our temporary stack, and back to the game!
