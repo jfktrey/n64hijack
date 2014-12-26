@@ -10,7 +10,7 @@ Usage is ``n64hijack infile outfile asmfile`` where ``asmfile`` is the assembly 
 
 **patcher.asm** is an extra file included with the distribution of n64hijack. It demonstrates how to run code every time the general exception handler is called in an N64 game. It implements a GameShark-like cheat engine using a technique based on the work of parasyte in his [alt64](https://github.com/parasyte/alt64) project. It should be easily modifiable to allow you to insert your own code to run at the GEH and cut out the GameShark. Alternatively, you can keep the cheat engine and bake GameShark cheats directly into a ROM - there's a section at the end of **patcher.asm** to add in these cheats.
 
-*Note that some of the methods used in patcher.asm assume that the ROM being patched is a commercially-released game and not a piece of homebrew software.*
+*__IMPORTANT__ - some of the methods used in patcher.asm assume that the ROM being patched is a commercially-released game and not a piece of homebrew software. Additionally, hijacking the GEH as implemented in patcher.asm this __will not work on an emulator__. It relies on WATCH exceptions, which no emulators currently support (as they are usually only used for debugging).*
 
 ## u64asm
 
