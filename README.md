@@ -10,4 +10,4 @@ n64hijack relies on the [u64asm](https://github.com/mikeryan/n64dev/tree/master/
 
 ## Running
 
-Usage is ``n64hijack infile outfile asmfile`` where ``asmfile`` is the assembly to compile and run at the start of the game.
+Usage is ``n64hijack infile outfile asmfile`` where ``asmfile`` is the assembly to run at the start of the game.
