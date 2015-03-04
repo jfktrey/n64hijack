@@ -9,6 +9,7 @@
 
 #include "crc.h"
 #include <cstdio>
+#include <cstring>
 #include <fstream>
 
 // Code that is inserted at 0x1000 in the rom to start up the patcher
