@@ -26,6 +26,7 @@
 
 
 #include <cstdlib>
+#include <stdint.h>
 
 namespace n64crc {
 
