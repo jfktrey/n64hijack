@@ -1,3 +1,5 @@
+ // Modified for n64hijack
+
 /* snesrc - SNES Recompiler
  *
  * Mar 23, 2010: addition by spinout to actually fix CRC if it is incorrect
@@ -21,8 +23,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
- // Modified for n64hijack
 
 
 #include <cstdlib>

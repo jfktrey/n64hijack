@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Project: n64hijack
-;; File: hijack.asm
+;; File: patcher.asm
 ;; Author: jungerman <jungerman.mail@gmail.com>
 ;; 
 ;; A majority of the file is originally by parasyte <jay@kodewerx.org>, adapted from his alt64

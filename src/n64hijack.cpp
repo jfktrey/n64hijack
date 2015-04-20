@@ -1,6 +1,6 @@
 /***************************************************************************************************
 || Project: n64hijack
-|| File: hijack.cpp
+|| File: n64hijack.cpp
 || Author: jungerman <jungerman.mail@gmail.com>
 ||
 || Patches ROMs to run pieces of code before a given game starts.
