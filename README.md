@@ -4,7 +4,7 @@ n64hijack is a command-line executable that allows you to easily insert some ass
 
 ## Running
 
-Usage is ``n64hijack infile outfile asmfile`` where ``asmfile`` is the assembly to run at the start of the game.
+Usage is ``n64hijack infile outfile asmfile [--noWatchKill]`` where ``asmfile`` is the assembly to run at the start of the game. Adding the ``--noWatchKill`` argument disables the functionality where codes that write to WatchLo and WatchHi are automatically NOP'ed. In commercial games, writes to WatchLo and WatchHi are undoubtedly attempts to kill GameShark-type cheating devices. Leaving WatchKill enabled removes the need for F1-type codes, but may cause issues if a homebrew game relies on them.
 
 ## patcher.asm
 

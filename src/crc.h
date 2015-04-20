@@ -79,10 +79,12 @@ void _generateTable() {
     poly = 0xEDB88320;
     for (i = 0; i < 256; i++) {
         crc = i;
+
         for (j = 8; j > 0; j--) {
             if (crc & 1) crc = (crc >> 1) ^ poly;
             else crc >>= 1;
         }
+
         crc_table[i] = crc;
     }
 }
@@ -182,8 +184,8 @@ int calculateGameCrc(uint32_t *crc, uint8_t *data, uint16_t cic) {
 }
 
 uint8_t recalculate(uint8_t *buffer, uint32_t *crc, uint16_t *cic, bool *didRecalculate) {
-    *cic = cicFromCrc(buffer);
     _generateTable();
+    *cic = cicFromCrc(buffer);
 
     // Try to calculate game CRC
     if (calculateGameCrc(crc, buffer, *cic)) {

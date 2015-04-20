@@ -156,23 +156,73 @@ uint32_t findPatcherLocation (uint8_t buffer[], uint32_t length) {
 }
 
 
+// Replace any instructions that move a value to the CP0 WatchLo or WatchHi register.
+// In commercial games, they are surely an attempt to disable the GameShark.
+// Removes the need for F1-type codes.
+void killWatchInstructions (uint8_t buffer[], uint32_t length) {
+    for (uint32_t i = n64crc::GAME_START; i < length; i += 4) {
+        // Instruction format:
+        //   mtc0 $rt, $rd
+        //   ... where $rt is stored in $rd.
+        //   Binary equivalent is 01000000 100[$rt] [$rd]000 00000000
+        //   Remember that registers are identified by 5 bits.
+        // Searching for:
+        //   mtc0 [any register], watchlo
+        //   mtc0 [any register], watchhi
+        // Values:
+        //   watchlo = 18 = 0b10010
+        //   watchhi = 19 = 0b10011
+        //   mask to match both = 0b11110
+        if (
+            ((buffer[i    ]             ) == 0b01000000) &&     // Upper bits should always be this.
+            ((buffer[i + 1] & 0b11100000) == 0b10000000) &&     // Mask out the value of the $rt register, we don't care.
+            ((buffer[i + 2] & 0b11110111) == 0b10010000) &&     // Mask out the bit that is different between watchlo and watchhi so we match both for $rd.
+            ((buffer[i + 3]             ) == 0b00000000)        // Lower bits should always be this.
+        ) {
+            // NOP it!
+            buffer[i    ] = 0x00;
+            buffer[i + 1] = 0x00;
+            buffer[i + 2] = 0x00;
+            buffer[i + 3] = 0x00;
+            printf("[i] Killed a watch disabler at 0x%08X\n", i);
+        }
+    }
+}
+
+
+// Run this whenever n64hijack is run with incorrect arguments.
+void argumentError () {
+    printf("Usage: n64hijack infile outfile asmfile [--noWatchKill]\n");
+    printf("See README.md for help.\n");
+    exit(1);
+}
+
+
 // Main function
 // The user passes in three arguments
 // The first argument is the input ROM to be patched
 // The second is the filename to store the output ROM with
 // The third is a bit of assembly to be run when the ROM starts.
-//   Included with this project is an asm file to enable using GameShark-like cheats for a game.
-//   Note that it only works correctly on real hardware, as no N64 emulators support WATCH exceptions.
+//   - Included with this project is an asm file to enable using GameShark-like cheats for a game.
+//   - Note that it only works correctly on real hardware and the cen64 emulator.
+// The fourth disables the GameShark WATCH interrupt protection (on by default). The GameShark requires the usage of a WATCH
+//   interrupt to correctly override the General Exception Handler. Some games attempt to prevent the GameShark from working
+//   by overwriting the WATCH interrupt defined by the GameShark. The WatchKill functionality automatically patches these out.
+//   Normally, this is worked around by using F1-type GameShark codes, but leaving this enabled removes the need for them.
 int main (int argc, char** argv) {
     char* charRomBuffer;
     uint8_t* romBuffer;
     uint32_t length, patcherLocation;
+    bool doWatchKill = true;
     const char* hijackAsmFilename;
 
-    if (argc != 4) {
-        printf("Usage: n64hijack infile outfile asmfile\n");
-        exit(1);
+    if (argc == 5) {
+        if (strcmp(argv[4], "--noWatchKill")) argumentError();
+    } else if (argc > 5) {
+        argumentError();
     }
+
+    if (argc == 4) doWatchKill = false;
 
     hijackAsmFilename = argv[3];
 
@@ -184,6 +234,7 @@ int main (int argc, char** argv) {
     printf("[i] Image name:       %s\n", romTitle);
 
     patcherLocation = findPatcherLocation(romBuffer, length);
+    if (doWatchKill) killWatchInstructions(romBuffer, patcherLocation);  // patcherLocation is used as length of the buffer since everything after it is padding.
     insertPatcher(patcherLocation, romBuffer, hijackAsmFilename);
     insertJump(patcherLocation, romBuffer);
     updateCrc(romBuffer);
