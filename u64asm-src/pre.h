@@ -116,7 +116,7 @@ int CopyFile(char * infile, ofstream & output, unsigned long &defcnt, unsigned l
             willtolive=false; // no point in reading any further
          } else if (instr[c] == stringinnage && inastring) {
             inastring = false;
-         } else if (instr[c] == '\"'|| instr[c] == '\'' && !inastring) {
+         } else if (instr[c] == '\"'|| (instr[c] == '\'' && !inastring)) {
             inastring = true;
             stringinnage = instr[c];
          }

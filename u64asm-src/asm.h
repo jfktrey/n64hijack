@@ -56,7 +56,7 @@ char LowerCase(char c) {
    if (c >= 'A' && c <= 'Z') return c+('a'-'A');
    else return c;
 }
-bool CheckEq(char *array, int aoff, char *sstring, int &ic) {
+bool CheckEq(const char *array, int aoff, const char *sstring, int &ic) {
    int c;
    ic=aoff;
    for (c=0; c < strlen(sstring); c++) {
@@ -66,7 +66,7 @@ bool CheckEq(char *array, int aoff, char *sstring, int &ic) {
    }
    return true;
 }
-bool CheckSym(char *array, int aoff, char *sstring, int &ic) {
+bool CheckSym(const char *array, int aoff, const char *sstring, int &ic) {
    int c;
    ic=aoff;
    #define OECSIZE 17
@@ -80,14 +80,14 @@ bool CheckSym(char *array, int aoff, char *sstring, int &ic) {
    return true;
 }
 
-int OperandOffset(char *thestring, int cchar) {
+int OperandOffset(const char *thestring, int cchar) {
    int c;
    for (c=cchar; (c < strlen(thestring)) && !IsChar(thestring[c]); c++) {}
    return c;
 }
 
 // Returns error code
-int FindOperands(char *instr,int firstbyte, char **pointers, unsigned long *values, int *types, int &numops, int maxops) {
+int FindOperands(const char *instr,int firstbyte, char **pointers, unsigned long *values, int *types, int &numops, int maxops) {
    int c, c2, c3;
    unsigned long total;
    int errl;
@@ -104,7 +104,7 @@ int FindOperands(char *instr,int firstbyte, char **pointers, unsigned long *valu
             numops++;
             inastring=true;
             c2=c;
-            *(pointers+numops) = instr+c+1;
+            *(pointers+numops) = (char *)(instr+c+1);
             types[numops] = DTYPE_STRING;
             while ((c < strlen(instr)) && inastring) {
                c++;
@@ -120,7 +120,7 @@ int FindOperands(char *instr,int firstbyte, char **pointers, unsigned long *valu
             numops++;
             inastring=true;
             c2=c;
-            *(pointers+numops) = instr+c+1;
+            *(pointers+numops) = (char *)(instr+c+1);
             types[numops] = DTYPE_STRING;
             while ((c < strlen(instr)) && inastring) {
                c++;
@@ -179,7 +179,7 @@ int FindOperands(char *instr,int firstbyte, char **pointers, unsigned long *valu
    return NO_ERROR;
 }
 
-int GetSymbol(char * instr, int &c, int &symnum) {
+int GetSymbol(const char * instr, int &c, int &symnum) {
    bool inastring=true;
    int c2, c3;
    for (c2=0; (c2 < maxsymbols)&&inastring; c2++) {
