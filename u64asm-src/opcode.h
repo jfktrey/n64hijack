@@ -56,9 +56,9 @@ int dch_fn(char **, unsigned long *, int *, int, unsigned long &, bool, int);
 int dcw_fn(char **, unsigned long *, int *, int, unsigned long &, bool, int);
 int incbin_fn(char **, unsigned long *, int *, int, unsigned long &, bool, int);
 int org_fn(char **, unsigned long *, int *, int, unsigned long &, bool, int);
-int equ_fn(const char *, int);
-int equr_fn(const char *, int);
-int equne_fn(const char *, int);
+int equ_fn(char *, int);
+int equr_fn(char *, int);
+int equne_fn(char *, int);
 int li_fn(char **, unsigned long *, int *, int, unsigned long &, bool, int);
 int la_fn(char **, unsigned long *, int *, int, unsigned long &, bool, int);
 int move_fn(char **, unsigned long *, int *, int, unsigned long &, bool, int);
@@ -71,7 +71,7 @@ int watch_fn(char **, unsigned long *, int *, int, unsigned long &, bool, int);
 
 struct instruction
 {
-   const char * name;
+   char * name;
    unsigned long base;
    int numparams;
    char paramtypes[3];
@@ -160,7 +160,7 @@ int (*specialfcn[])(char **,unsigned long *,int *,int,unsigned long &,bool,int) 
    db_fn,dh_fn,dw_fn,dcb_fn,dch_fn,dcw_fn,incbin_fn,org_fn,li_fn,la_fn,
    move_fn,obj_fn,objend_fn,report_fn,offset_fn,assert_fn,watch_fn};
 
-int AsmInstr(unsigned long &pc, const char * instr, int c, int outhandle) {
+int AsmInstr(unsigned long &pc, char * instr, int c, int outhandle) {
    unsigned long opcode;
    int icount,ic; // ic is the offset to start parameter searching at.
    int temp;
@@ -510,7 +510,7 @@ int org_fn(char ** pointers, unsigned long * values, int * types, int numops, un
    return ERR_BAD_OPERAND;
 }
 
-int equ_fn(const char *instr, int firstbyte) {
+int equ_fn(char *instr, int firstbyte) {
    char * pointers[2];
    unsigned long values[2];
    int types[2];
@@ -537,7 +537,7 @@ int equ_fn(const char *instr, int firstbyte) {
    return ERR_BAD_OPERAND;
 }
 
-int equr_fn(const char *instr, int firstbyte) {
+int equr_fn(char *instr, int firstbyte) {
    char * pointers[2];
    unsigned long values[2];
    int types[2];
@@ -565,7 +565,7 @@ int equr_fn(const char *instr, int firstbyte) {
 }
 
 // ne=no bexport, keeps these declarations out of headers
-int equne_fn(const char *instr, int firstbyte) {
+int equne_fn(char *instr, int firstbyte) {
    char * pointers[2];
    unsigned long values[2];
    int types[2];

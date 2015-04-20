@@ -152,6 +152,8 @@
 //#define QUOTES
 #pragma warn -obs
 
+using namespace std;
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -163,8 +165,6 @@
 #include <sys/time.h>
 #include <sys/stat.h>
 #include "defines.h"
-
-using namespace std;
 
 bool ExpError;
 int  ExpErrorV;
@@ -203,30 +203,30 @@ struct Macro {
 };
 
 void InitRegs(void);
-int LoadSymbols(const char * asmfiles, unsigned int line);
-unsigned int CountSymbols(const char *);
+int LoadSymbols(char * asmfiles, unsigned int line);
+unsigned int CountSymbols(char *);
 int Errhandler(int, unsigned long, char *, char *);
 void Syntax(char *);
-int AssembleFile(const char *, int, unsigned long &,unsigned long &, bool &);
+int AssembleFile(char *, int, unsigned long &,unsigned long &, bool &);
 bool IsChar(char);      // Returns false if the character is a space or null
 char LowerCase(char);   // Converts character to lowercase
-bool CheckEq(const char *, int, const char *, int &); // Sees if 2nd str is in
-                                                      // 1st str at int
-bool CheckSym(const char *, int, const char *, int &);      // slightly different from
+bool CheckEq(char *, int, char *, int &);       // Sees if 2nd str is in
+                                                // 1st str at int
+bool CheckSym(char *, int, char *, int &);      // slightly different from
                         // checkeq because it allows chars after the string
                         // when there are spaces in the search string
 int Assemble(ifstream &, int, unsigned long &); // Main assembly function
                                                // returns error code
-int OperandOffset(const char *, int);                // Finds the offset of the
+int OperandOffset(char *, int);                // Finds the offset of the
                                                 // first operand
-int FindOperands(const char *,int, char **, unsigned long *, int *, int &, int);
-int GetSymbol(const char *, int &, int &);
+int FindOperands(char *,int, char **, unsigned long *, int *, int &, int);
+int GetSymbol(char *, int &, int &);
 
 // Expression evaluation prototypes
 int InSet(char *, int, char);
-unsigned long EvOp(const char *, int &);
-unsigned long EvInt(const char *, int &);
-unsigned long Evaluate(const char *, int &);
+unsigned long EvOp(char *, int &);
+unsigned long EvInt(char *, int &);
+unsigned long Evaluate(char *, int &);
 unsigned long DivRep(unsigned long, unsigned long, unsigned long);
 unsigned long Root(unsigned long, unsigned long);
 
@@ -277,7 +277,7 @@ int main(int argc, char *argv[]) {
 
    // *** BEGIN ARGUMENT PROCESSING
 
-   const char *asmfile = "temp2.tmp";
+   char *asmfile = "temp2.tmp";
    char *realfile = (char *)0;
    char *outfile = (char *)0;
    char *headfile = (char *)0;
@@ -516,7 +516,7 @@ int main(int argc, char *argv[]) {
    return 0;
 }
 
-int AssembleFile(const char * rasmfile, int outhandle, unsigned long &line_count,
+int AssembleFile(char * rasmfile, int outhandle, unsigned long &line_count,
                  unsigned long &program_counter, bool &fatalerror) {
    char instr[256], asmfile[256];
    int errl,linecountfactor=1,c;
