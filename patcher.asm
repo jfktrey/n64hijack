@@ -151,7 +151,7 @@ loop_cache_code_engine:
 
 
     ; Start game!
-#include overwritten.asm
+#include   overwritten.asm
     jr     t4
     nop
 
@@ -193,6 +193,8 @@ not_nmi:
     eret
 
 run_code_engine:
+    ; FIRST, run USB comms
+#include   usb.asm
     ; Run code engine
     lui    k0, $8000
     lw     k0, $0188(k0)      ; k0 now contains the address of the code engine

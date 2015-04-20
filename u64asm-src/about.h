@@ -1,14 +1,14 @@
-         cout << setw(13) << ' ' << "ÉÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»\n";
-         cout << setw(13) << ' ' << "º        ³        ³                 ³                 º\n";
-         cout << setw(13) << ' ' << "º        ³        ³                 ³                 º\n";
-         cout << setw(13) << ' ' << "º                 ³                 ³        ÄÄÄÄÄÄÄÄÄ¶\n";
-         cout << setw(13) << ' ' << "º                 ³         ÄÄÄÄÄÄÄÄ´                 º\n";
-         cout << setw(13) << ' ' << "º                 ³                 ÃÄÄÄÄÄÄÄÄÄ        º\n";
-         cout << setw(13) << ' ' << "º        ³        ³                 ³                 º\n";
-         cout << setw(13) << ' ' << "º        ³        ³                 ³                 º\n";
-         cout << setw(13) << ' ' << "ÈÍÍÍÍÍÍÍÍÏÍÍÍÍÑÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÏÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ¼\n";
-         cout << setw(13) << ' ' << "              ³ Halley's Comet Software ³\n";
-         cout << setw(13) << ' ' << "              ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n\n";
+         cout << setw(13) << ' ' << "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
+         cout << setw(13) << ' ' << "X        X        X                 X                 X\n";
+         cout << setw(13) << ' ' << "X        X        X                 X                 X\n";
+         cout << setw(13) << ' ' << "X                 X                 X        XXXXXXXXXX\n";
+         cout << setw(13) << ' ' << "X                 X         XXXXXXXXX                 X\n";
+         cout << setw(13) << ' ' << "X                 X                 XXXXXXXXXX        X\n";
+         cout << setw(13) << ' ' << "X        X        X                 X                 X\n";
+         cout << setw(13) << ' ' << "X        X        X                 X                 X\n";
+         cout << setw(13) << ' ' << "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
+         cout << setw(13) << ' ' << "              X Halley's Comet Software X\n";
+         cout << setw(13) << ' ' << "              XXXXXXXXXXXXXXXXXXXXXXXXXXX\n\n";
          
          
          cout << "U64ASM was written by themind in order to complete Neon64.\n";

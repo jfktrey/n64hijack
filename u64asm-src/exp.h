@@ -1,6 +1,6 @@
 // Expression evaluation
 
-unsigned long Evaluate(char * s, int &c) {
+unsigned long Evaluate(const char * s, int &c) {
    unsigned long total = 0;
    unsigned long op2,op3;
    signed long c2;
@@ -111,7 +111,7 @@ int InSet(char * set, int setsize, char ciq) {
 
 // Evaluates a single operand
 // Unary operators (-, ~) are covered here
-unsigned long EvOp(char * s, int &c) {
+unsigned long EvOp(const char * s, int &c) {
    // Valid characters for an operand
    unsigned long total;
    int d;
@@ -171,7 +171,7 @@ unsigned long EvOp(char * s, int &c) {
 }
 
 // Evaluates an integer in decimal, hex ($), bin (%), or octal (#)
-unsigned long EvInt(char * s, int &c) {
+unsigned long EvInt(const char * s, int &c) {
    int base=10,d;
    char charset[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
    //bool neg=false;

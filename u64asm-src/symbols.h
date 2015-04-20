@@ -18,21 +18,21 @@ unsigned int maxsymbols;
 // registers are implemented as symbols
 
 void InitRegs(void) {
-   char * regnames[32] = {"r0 ","at ","v0 ","v1 ","a0 ","a1 ","a2 ","a3 ",
-                          "t0 ","t1 ","t2 ","t3 ","t4 ","t5 ","t6 ","t7 ",
-                          "s0 ","s1 ","s2 ","s3 ","s4 ","s5 ","s6 ","s7 ",
-                          "t8 ","t9 ","k0 ","k1 ","gp ","sp ","s8 ","ra "};
-   char * regnames2[32]={"zero ","r1 ", "r2 ", "r3 ", "r4 ", "r5 ", "r6 ", "r7 ",
-                         "r8 ", "r9 ", "r10 ","r11 ","r12 ","r13 ","r14 ","r15 ",
-                         "r16 ","r17 ","r18 ","r19 ","r20 ","r21 ","r22 ","r23 ",
-                         "r24 ","r25 ","r26 ","r27 ","r28 ","r29 ","r30 ","r31 "};
-   char * regnames0[10]={"r00 ","r01 ","r02 ","r03 ","r04 ","r05 ","r06 ","r07 ","r08 ","r09 "};
-   char * cop0[32]={"index ","random ","entrylo0 ","entrylo1 ","context ",
-                    "pagemask ","wired ","c07 ","badvaddr ","count ",
-                    "entryhi ","compare ","status ","cause ","epc ","previd ",
-                    "config ","lladdr ","watchlo ","watchhi ","xcontext ",
-                    "c21 ","c22 ","c23 ","c24 ","c25 ","perr ","cacheerr ",
-                    "taglo ","taghi ","errorepc ","c31 "};
+   const char * regnames[32] = {"r0 ","at ","v0 ","v1 ","a0 ","a1 ","a2 ","a3 ",
+                                "t0 ","t1 ","t2 ","t3 ","t4 ","t5 ","t6 ","t7 ",
+                                "s0 ","s1 ","s2 ","s3 ","s4 ","s5 ","s6 ","s7 ",
+                                "t8 ","t9 ","k0 ","k1 ","gp ","sp ","s8 ","ra "};
+   const char * regnames2[32]={"zero ","r1 ", "r2 ", "r3 ", "r4 ", "r5 ", "r6 ", "r7 ",
+                               "r8 ", "r9 ", "r10 ","r11 ","r12 ","r13 ","r14 ","r15 ",
+                               "r16 ","r17 ","r18 ","r19 ","r20 ","r21 ","r22 ","r23 ",
+                               "r24 ","r25 ","r26 ","r27 ","r28 ","r29 ","r30 ","r31 "};
+   const char * regnames0[10]={"r00 ","r01 ","r02 ","r03 ","r04 ","r05 ","r06 ","r07 ","r08 ","r09 "};
+   const char * cop0[32]={"index ","random ","entrylo0 ","entrylo1 ","context ",
+                          "pagemask ","wired ","c07 ","badvaddr ","count ",
+                          "entryhi ","compare ","status ","cause ","epc ","previd ",
+                          "config ","lladdr ","watchlo ","watchhi ","xcontext ",
+                          "c21 ","c22 ","c23 ","c24 ","c25 ","perr ","cacheerr ",
+                          "taglo ","taghi ","errorepc ","c31 "};
 
    unsigned int c;
    for (c=0; c < 32; c++) {
@@ -81,7 +81,7 @@ void InitRegs(void) {
 // counted repeatedly and thus not caught here, but they will be later.
 // it counts as a symbol if the first character is not whitespace or if
 // it is not an include
-unsigned int CountSymbols(char * asmfile) {
+unsigned int CountSymbols(const char * asmfile) {
    ifstream input(asmfile);
    char instr[256];
    unsigned int symbcount=0;
@@ -107,7 +107,7 @@ unsigned int CountSymbols(char * asmfile) {
 }
 
    
-int LoadSymbols(char * rasmfile) {
+int LoadSymbols(const char * rasmfile) {
    //InitRegs(); // Load the basic symbols (register names)
                  // already done in main()
    
