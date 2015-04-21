@@ -15,5 +15,3 @@ Usage is ``n64hijack infile outfile asmfile [--noWatchKill]`` where ``asmfile`` 
 ## u64asm
 
 n64hijack relies on the [u64asm](https://github.com/mikeryan/n64dev/tree/master/util/u64asm) assembler by [hcs](http://www.hcs64.com/). It's not a perfect assembler as it still contains some bugs with pseudoinstructions (notably ``li`` and a lack of an unconditional branch, ``b``), but it's the best assembler available that doesn't require the installation of a large toolchain.
-
-**NOTE:** It's highly likely that you'll see u64asm compile with a lot of warnings. This is normal. If I have some time, I'd like to clean it up a bit to get rid of those. As it stands, though, it works correctly for what it's used for.
