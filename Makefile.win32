@@ -1,0 +1,9 @@
+.PHONY: src u64asm-src
+
+all: src u64asm-src
+
+src:
+	$(MAKE) -C $@ -f Makefile.win32
+
+u64asm-src:
+	$(MAKE) -C $@ -f Makefile.win32

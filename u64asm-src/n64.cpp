@@ -248,9 +248,6 @@ int drjrsend(char *); // Parameter is name of file to send.
 #include "err.h"
 #include "crc.h"
 
-#ifdef WIN32
-#include "drjr.h"
-#endif
 
 // get time in milliseconds
 unsigned long gettime(void) {
@@ -304,9 +301,6 @@ int main(int argc, char *argv[]) {
          headfile = argv[c]+2;
          if (argv[c][2]=='\0') headfile = (char *)0;
       } else if (argv[c][0] == '-' && argv[c][1] == 'r') romout=true;
-#ifdef WIN32
-      else if (argv[c][0] == '-' && argv[c][1] == 's') {drsend=true; romout=true;}
-#endif
       else {
          realfile = argv[c];
          willtolive=true;
@@ -468,13 +462,6 @@ int main(int argc, char *argv[]) {
    } while ((!symbolcertain || !pccertain) && !fatalerror);
    // ********** END OF MAIN ASSEMBLY LOOP ****************8
 
-#ifdef WIN32
-   if (drsend && !fatalerror) {
-      cout << "Sending";
-      if (drjrsend(outfile)) return 1;
-   }
-#endif
-
    if (header && !fatalerror) {
       cout << "Creating header " << headfile << " . . .\n";
       ofstream headerfile(headfile);
@@ -624,10 +611,6 @@ void Syntax(char * exename) {
    cout << "                    checksummed N64 ROM image. The assembler expects the N64\n";
    cout << "                    boot header to be in a file called \"header\" in either the\n";
    cout << "                    same directory as the source or the assembler.\n";
-#ifdef WIN32
-   cout << "-s:                 This switch sends the N64 ROM image to a V64jr backup unit.\n";
-   cout << "                    -s activates the -r switch automatically.\n";
-#endif
    cout << "-about or -credits  Gives some information about the program and those who made\n";
    cout << "                    it possible.\n";
    return;
