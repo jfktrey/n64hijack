@@ -25,6 +25,10 @@
  */
 
 
+#ifndef N64CRC_H
+#define N64CRC_H
+
+
 #include <cstdlib>
 #include <stdint.h>
 
@@ -119,7 +123,7 @@ uint16_t cicFromCrc(uint8_t *data) {
         case 0xACC8580A: return 6106;
     }
 
-    return 6105;
+    return 0;
 }
 
 // Calculates the CRC of the game's actual code.
@@ -187,10 +191,11 @@ int calculateGameCrc(uint32_t *crc, uint8_t *data, uint16_t cic) {
 uint8_t recalculate(uint8_t *buffer, uint32_t *crc, uint16_t *cic, bool *didRecalculate) {
     _generateTable();
     *cic = cicFromCrc(buffer);
+    if (cic == 0) return 1;
 
     // Try to calculate game CRC
     if (calculateGameCrc(crc, buffer, *cic)) {
-        return 3;
+        return 2;
     } else {
         didRecalculate[0] = didRecalculate[1] = false;
 
@@ -210,3 +215,6 @@ uint8_t recalculate(uint8_t *buffer, uint32_t *crc, uint16_t *cic, bool *didReca
 
 
 } // end namespace n64crc
+
+
+#endif /* N64CRC_H */
