@@ -111,7 +111,7 @@ void insertPatcher (uint32_t patcherAddress, uint8_t buffer[], const char* asmFi
     sprintf(orgAssembly, "PATCHER_ADDRESS equ $%08X\n", patcherAddress);
     writeBuffer("patcher_address.asm", orgAssembly, sizeof(orgAssembly));
 
-#ifdef __unix__
+#if defined __unix__ || defined __APPLE__
     if (system((std::string("./u64asm ") + asmFile + " -ohijack_temp.bin > assembly.log").c_str())) {
 #elif defined _WIN32 || defined _WIN64
     if (system((std::string("u64asm.exe ") + asmFile + " -ohijack_temp.bin > assembly.log").c_str())) {
